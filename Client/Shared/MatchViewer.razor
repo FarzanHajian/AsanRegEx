@@ -1,0 +1,64 @@
+﻿<div class="box mb-3" style="background-color:@BackgroundColor">
+    <h6>Match:</h6>
+    <Grid TItem="MatchModel" class="table table-sm table-hover table-bordered table-striped mb-3 table-light" DataProvider="MatchDataProvider" Responsive="true">
+        <GridColumn TItem="MatchModel" HeaderText="Value" PropertyName="Value">
+            @context.Value
+        </GridColumn>
+        <GridColumn TItem="MatchModel" HeaderText="Index" PropertyName="Index">
+            @context.Index
+        </GridColumn>
+        <GridColumn TItem="MatchModel" HeaderText="Length" PropertyName="Length">
+            @context.Length
+        </GridColumn>
+    </Grid>
+
+    <h6>Captures:</h6>
+    <Grid TItem="CaptureModel" class="table table-sm table-hover table-bordered table-striped mb-3 table-light" DataProvider="CaptureDataProvider" Responsive="true">
+        <GridColumn TItem="CaptureModel" HeaderText="Value" PropertyName="Value">
+            @context.Value
+        </GridColumn>
+        <GridColumn TItem="CaptureModel" HeaderText="Index" PropertyName="Index">
+            @context.Index
+        </GridColumn>
+        <GridColumn TItem="CaptureModel" HeaderText="Length" PropertyName="Length">
+            @context.Length
+        </GridColumn>
+    </Grid>
+
+    <h6>Groups:</h6>
+    <Grid TItem="GroupModel" class="table table-sm table-hover table-bordered table-striped mb-3 table-light" DataProvider="GroupDataProvider" Responsive="true">
+        <GridColumn TItem="GroupModel" HeaderText="Name" PropertyName="Name">
+            @context.Name
+        </GridColumn>
+        <GridColumn TItem="GroupModel" HeaderText="Value" PropertyName="Value">
+            @context.Value
+        </GridColumn>
+        <GridColumn TItem="GroupModel" HeaderText="Index" PropertyName="Index">
+            @context.Index
+        </GridColumn>
+        <GridColumn TItem="GroupModel" HeaderText="Length" PropertyName="Length">
+            @context.Length
+        </GridColumn>
+    </Grid>
+</div>
+
+@code {
+    [Parameter] public MatchModel Model { get; set; } = null!;
+    [Parameter] public string BackgroundColor { get; set; } = "";
+
+    private Task<GridDataProviderResult<MatchModel>> MatchDataProvider(GridDataProviderRequest<MatchModel> request)
+    {
+        return Task.FromResult(request.ApplyTo(Enumerable.Repeat(Model, 1)));
+    }
+
+    private Task<GridDataProviderResult<CaptureModel>> CaptureDataProvider(GridDataProviderRequest<CaptureModel> request)
+    {
+        return Task.FromResult(request.ApplyTo(Model.Captues));
+    }
+
+    private Task<GridDataProviderResult<GroupModel>> GroupDataProvider(GridDataProviderRequest<GroupModel> request)
+    {
+        return Task.FromResult(request.ApplyTo(Model.Groups));
+    }
+
+}

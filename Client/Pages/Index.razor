@@ -1,0 +1,47 @@
+﻿@page "/"
+@inject MatchService service
+
+<EditForm Model="@requestModel" OnSubmit="@OnSubmit">
+    <label for="pattern" class="form-label">RegEx Pattern</label>
+    <input type="text" class="form-control mb-3" id="pattern" @bind-value="@requestModel.Pattern" autocomplete="off" required>
+
+    <label for="input" class="form-label">Input String</label>
+    <textarea class="form-control mb-3" id="input" @bind="@requestModel.Input" required></textarea>
+
+    <div class="row mb-3">
+        <OptionSwitch @bind-Checked="@requestModel.IgnoreCase" Title="IgnoreCase" />
+        <OptionSwitch @bind-Checked="@requestModel.Multiline" Title="Multiline" />
+        <OptionSwitch @bind-Checked="@requestModel.Singleline" Title="Singlelinet" />
+        <OptionSwitch @bind-Checked="@requestModel.ExplicitCapture" Title="ExplicitCapture" />
+        <OptionSwitch @bind-Checked="@requestModel.IgnorePatternWhitespace" Title="IgnorePatternWhitespace" />
+        <OptionSwitch @bind-Checked="@requestModel.RightToLeft" Title="RightToLeft" />
+        <OptionSwitch @bind-Checked="@requestModel.ECMAScript" Title="ECMAScript" />
+        <OptionSwitch @bind-Checked="@requestModel.CultureInvariant" Title="CultureInvariant" />
+        <OptionSwitch @bind-Checked="@requestModel.NonBacktracking" Title="NonBacktracking" />
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-4 text-center">
+            <Button Type="ButtonType.Submit" Color="ButtonColor.Secondary">
+                <Icon Name="IconName.PlayBtnFill" /> Match
+            </Button>
+        </div>
+    </div>
+</EditForm>
+
+<hr />
+
+@if(matchesFound is not null) {
+    for (int i = 0; i < matchesFound.Length; i++) {
+        <MatchViewer @key="@i" Model="@matchesFound[i]" BackgroundColor=@(i%2 == 0 ? "var(--color1)":"var(--color2)") />
+    }
+}
+
+@code {
+    private RequestModel requestModel = new() { Input = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", Pattern = @"\b\w*[aeoiu][aeoiu]\w*\b" };
+    private MatchModel[]? matchesFound = null;
+
+    private void OnSubmit()
+    {
+        matchesFound = service.GetMatches(requestModel);
+    }
+}
