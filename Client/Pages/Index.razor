@@ -1,5 +1,7 @@
 ﻿@page "/"
 @inject MatchService service
+@inject ToastService toastService
+
 
 <EditForm Model="@requestModel" OnSubmit="@OnSubmit">
     <label for="pattern" class="form-label">RegEx Pattern</label>
@@ -32,7 +34,7 @@
 
 @if(matchesFound is not null) {
     for (int i = 0; i < matchesFound.Length; i++) {
-        <MatchViewer @key="@i" Model="@matchesFound[i]" BackgroundColor=@(i%2 == 0 ? "var(--color1)":"var(--color2)") />
+        <MatchViewer @key="@matchesFound[i].GetHashCode()" Model="@matchesFound[i]" BackgroundColor=@(i%2 == 0 ? "var(--color1)":"var(--color2)") />
     }
 }
 
@@ -42,6 +44,13 @@
 
     private void OnSubmit()
     {
-        matchesFound = service.GetMatches(requestModel);
+        try
+        {
+            matchesFound = service.GetMatches(requestModel);
+        }
+        catch(Exception ex)
+        {
+            toastService.Notify(new(ToastType.Danger, ex.Message));
+        }
     }
 }

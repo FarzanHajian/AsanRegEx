@@ -24,6 +24,8 @@ public class MatchService
         for (int i = 0; i < result.Length; i++)
         {
             var match = matches[i];
+            if (!match.Success) continue;
+
             var item = new MatchModel(match.Name, match.Value, match.Index, match.Length);
 
             foreach (Capture cap in match.Captures)
@@ -33,12 +35,13 @@ public class MatchService
 
             foreach (Group grp in match.Groups)
             {
+                if (!grp.Success) continue;
                 item.Groups.Add(new GroupModel(grp.Name, grp.Value, grp.Index, grp.Length));
             }
 
             result[i] = item;
         }
-        
+
         return result;
     }
 }
