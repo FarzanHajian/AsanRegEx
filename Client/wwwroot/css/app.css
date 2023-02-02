@@ -1,11 +1,8 @@
 :root {
     --color1: #fefff6;
     --color2: #f6f9f9;
-}
-
-.box {
-    padding: 1rem;
-    border: solid 1px #dee2e6;
+    --color3: #D8DB0F;
+    --color4: #83F1F5;
 }
 
 #blazor-error-ui {
