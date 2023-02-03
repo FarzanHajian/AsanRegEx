@@ -1,0 +1,21 @@
+﻿@if (DataSource.Any())
+{
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        <Icon Name="IconName.CloudDownload" />
+    </button>
+    <ul class="dropdown-menu">
+        @foreach (var item in DataSource)
+        {
+            var title = item.ReplaceLineEndings("");
+            if (title.Length > MAX_LEGNTH) title = title.Substring(0, MAX_LEGNTH-3) + "...";
+            <li><a class="dropdown-item" href="#" @onclick="@(async()=>await OnSelect.InvokeAsync(item))">@title</a></li>
+        }
+    </ul>
+}
+
+@code
+{
+    private const int MAX_LEGNTH = 100;
+    [Parameter] public IEnumerable<string> DataSource { get; set; } = Enumerable.Empty<string>();
+    [Parameter] public EventCallback<string> OnSelect { get; set; }
+}

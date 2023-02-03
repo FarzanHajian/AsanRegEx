@@ -2,7 +2,8 @@
     <Switch Value="@Checked" Label="@Title" ValueExpression="@(()=>Checked)" ValueChanged="@OnValueChanged" />
 </div>
 
-@code {
+@code
+{
     [Parameter] public string Title { get; set; } = "";
     [Parameter] public bool Checked { get; set; }
     [Parameter] public EventCallback<bool> CheckedChanged { get; set; }

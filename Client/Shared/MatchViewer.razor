@@ -2,9 +2,11 @@
     <div>
         <h6 class="d-inline">Match:</h6>
         <span class="ms-3 text-primary" style="cursor: pointer; font-size:.75rem; user-select: none" @onclick=@(()=> isExpanded = !isExpanded)>
-            @if(isExpanded) {
+            @if(isExpanded)
+            {
                 <span>[ Less <Icon Name="IconName.CaretUp"></Icon> ]</span>
-            } else {
+            } else
+            {
                 <span>[ More <Icon Name="IconName.CaretDown"></Icon> ]</span>
             }
         </span>
@@ -21,7 +23,8 @@
         </GridColumn>
     </Grid>
 
-    @if (isExpanded) {
+    @if (isExpanded)
+    {
         <h6>Captures:</h6>
         <Grid TItem="CaptureModel" class="@TABLE_CLASSES" DataProvider="CaptureDataProvider" Responsive="true">
             <GridColumn TItem="CaptureModel" HeaderText="Value" PropertyName="Value">
@@ -53,7 +56,8 @@
     }
 </div>
 
-@code {
+@code
+{
     private const string TABLE_CLASSES = "table table-sm table-bordered table-light table-group-divider mb-3";
     private bool isExpanded = false;
     [Parameter] public MatchModel Model { get; set; } = null!;
@@ -73,5 +77,4 @@
     {
         return Task.FromResult(request.ApplyTo(Model.Groups));
     }
-
 }

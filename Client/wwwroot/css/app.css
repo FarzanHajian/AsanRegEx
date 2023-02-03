@@ -1,9 +1,102 @@
 :root {
-    --color1: #fefff6;
-    --color2: #f6f9f9;
-    --color3: #D8DB0F;
-    --color4: #83F1F5;
+    --color1: #84008F;
+    --color2: #6BDB0F;
+    --color3: #CB0FDB;
+    --color4: #81FF17;
+    --textColor: var(--color1);
+    --fontSize: 20px;
 }
+
+body {
+    font-family: Kollektif !important;
+    /*font-size: var(--fontSize) !important;*/
+    color: var(--textColor) !important;
+}
+
+    body:after {
+        content: "";
+        background-image: url(../images/bg.jpg);
+        background-attachment: fixed;
+        opacity: .7;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+        z-index: -1;
+    }
+
+/* ------------------------------------------------------------------ */
+
+.navbar-brand {
+    font-style: italic;
+    font-weight: bold;
+    color: var(--textColor);
+}
+
+/*.btn {
+    font-size: var(--fontSize);
+}
+
+.btn-primary {
+    background-color: var(--color1);
+    border-color: var(--color1);
+}
+    .btn-primary:hover {
+        background-color: var(--color3);
+        border-color: var(--color3);
+    }
+
+    .btn-primary:focus {
+        background-color: var(--color1);
+        border: none;
+    }
+
+    .btn-primary:hover, .btn-primary:active {
+        background-color: var(--color1);
+        border-color: var(--color1);
+    }
+
+
+.btn-check:checked + .btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check) + .btn:active {
+    background-color: var(--color1);
+    border-color: var(--color1);
+}
+*/
+
+/* ------------------------------------------------------------------ */
+@font-face {
+    font-family: "Kollektif";
+    font-display: swap;
+    font-weight: normal;
+    font-style: normal;
+    src: url(../fonts/Kollektif.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: "Kollektif";
+    font-weight: bold;
+    font-style: normal;
+    src: url(../fonts/Kollektif-Bold.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: "Kollektif";
+    font-display: swap;
+    font-weight: bold;
+    font-style: italic;
+    src: url(../fonts/Kollektif-BoldItalic.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: "Kollektif";
+    font-display: swap;
+    font-weight: normal;
+    font-style: italic;
+    src: url(../fonts/Kollektif-Italic.ttf) format('truetype');
+}
+
+/* ------------------------------------------------------------------ */
 
 #blazor-error-ui {
     background: lightyellow;

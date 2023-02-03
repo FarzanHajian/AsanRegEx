@@ -1,13 +1,19 @@
-﻿@inherits LayoutComponentBase
+﻿@using System.Reflection;
+@inherits LayoutComponentBase
 
 <main>
     <nav class="navbar navbar-expand border-bottom border-light-subtle" style="background-color:transparent">
         <div class="container-fluid">
-        <a class="navbar-brand" href="#">Asan RegEx</a>
+        <a class="navbar-brand" href="/">AsanRegEx</a>
             <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="https://github.com/FarzanHajian/AsanRegEx">Github</a>
-            </li>
+                <li class="nav-link active">
+                    <Icon Name="IconName.InfoCircleFill" Style="cursor:pointer" @onclick="@(async ()=> await (aboutModal?.ShowAsync() ?? Task.CompletedTask))"></Icon>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" target="_blank" href="@GITHUB_ADDRESS">
+                        <Icon Name="IconName.Github"></Icon>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -18,3 +24,19 @@
 </main>
 
 <Toasts class="p-3" AutoHide="true" Delay="4000" Placement="ToastsPlacement.TopRight" />
+
+<Modal @ref="@aboutModal" Size="ModalSize.Large" Title="AsanRegEx  (1.0.0)">
+    <BodyTemplate>
+        AsanRegEx is a simple .Net RegEx debugger. Checkout the <a href="@GITHUB_ADDRESS" target="_blank">Github</a> page for more information.
+        <br /><br />
+        Background image by <a href="https://pixabay.com/users/pexels-2286921/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1846980" target="_blank">Pexels</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1846980" target="_blank">Pixabay</a>
+        <br />
+        Kollektif font by <a href="http://bnftype.com" target="_blank">Brave New Fonts</a>
+    </BodyTemplate>
+</Modal>
+
+@code
+{
+    private const string GITHUB_ADDRESS = "https://github.com/FarzanHajian/AsanRegEx";
+    private Modal? aboutModal;
+}       

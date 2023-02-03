@@ -2,13 +2,18 @@
 @inject MatchService service
 @inject ToastService toastService
 
-
 <EditForm Model="@requestModel" OnSubmit="@OnSubmit">
-    <label for="pattern" class="form-label">RegEx Pattern</label>
-    <input type="text" class="form-control mb-3" id="pattern" @bind-value="@requestModel.Pattern" autocomplete="off" required>
-
     <label for="input" class="form-label">Input String</label>
-    <textarea class="form-control mb-3" id="input" @bind="@requestModel.Input" required></textarea>
+    <div class="input-group mb-3">
+        <CacheList DataSource="@service.GetCachedInputs()" OnSelect="(input)=>requestModel.Input = input" />
+        <textarea class="form-control" id="input" @bind="@requestModel.Input" required></textarea>
+    </div>
+
+    <label for="pattern" class="form-label">RegEx Pattern</label>
+    <div class="input-group mb-3">
+        <CacheList DataSource="@service.GetCachedPatterns()" OnSelect="(input)=>requestModel.Pattern = input" />
+        <input type="text" class="form-control" id="pattern" @bind-value="@requestModel.Pattern" autocomplete="off" required>
+    </div>
 
     <div class="row mb-3">
         <OptionSwitch @bind-Checked="@requestModel.IgnoreCase" Title="IgnoreCase" />
@@ -23,7 +28,7 @@
     </div>
     <div class="row justify-content-center mb-3">
         <div class="col-4 text-center">
-            <Button Type="ButtonType.Submit" Color="ButtonColor.Secondary">
+            <Button Type="ButtonType.Submit" Color="ButtonColor.Primary">
                 <Icon Name="IconName.PlayBtnFill" /> Match
             </Button>
         </div>
@@ -32,23 +37,38 @@
 
 <hr />
 
-@if(matchesFound is not null) {
-    for (int i = 0; i < matchesFound.Length; i++) {
+@if(matchesFound is not null)
+{
+    for (int i = 0; i < matchesFound.Length; i++)
+    {
         <MatchViewer @key="@matchesFound[i].GetHashCode()" Model="@matchesFound[i]" BackgroundColor=@(i%2 == 0 ? "var(--color1)":"var(--color2)") />
     }
 }
 
-@code {
+@code 
+{
     private RequestModel requestModel = new() { Input = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", Pattern = @"\b\w*[aeoiu][aeoiu]\w*\b" };
-//    private RequestModel requestModel = new() { Input = @"Cannot insert duplicate key row in object 'dbo.EmployeeRange' with unique index 'IX_EmployeeRange_Key_PricingRuleId'. The duplicate key value is (3, 1).
-//The statement has been terminated.", Pattern = @"^Cannot insert duplicate key row in object '[A-Za-z.]+' with unique index 'IX_([A-Za-z]+){1}_(?<colName>[A-Za-z]+(_[A-Za-z]+)*)'." };
+    //    private RequestModel requestModel = new() { Input = @"Cannot insert duplicate key row in object 'dbo.EmployeeRange' with unique index 'IX_EmployeeRange_Key_PricingRuleId'. The duplicate key value is (3, 1).
+    //The statement has been terminated.", Pattern = @"^Cannot insert duplicate key row in object '[A-Za-z.]+' with unique index 'IX_([A-Za-z]+){1}_(?<colName>[A-Za-z]+(_[A-Za-z]+)*)'." };
     private MatchModel[]? matchesFound = null;
+    private IEnumerable<string> inputCache = Enumerable.Empty<string>();
+    private IEnumerable<string> patternCache = Enumerable.Empty<string>();
+
+    protected override void OnInitialized()
+    {
+        inputCache = service.GetCachedInputs();
+        patternCache = service.GetCachedPatterns();
+    }
 
     private void OnSubmit()
     {
         try
         {
             matchesFound = service.GetMatches(requestModel);
+            if (!matchesFound.Any()) toastService.Notify(new(ToastType.Warning, "No match found"));
+            service.StoreInputInCache(requestModel.Input);
+            service.StorePatternInCache(requestModel.Pattern);
+
         }
         catch(Exception ex)
         {
