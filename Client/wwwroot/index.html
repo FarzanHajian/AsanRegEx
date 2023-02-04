@@ -15,7 +15,22 @@
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+    <div id="app">
+        <div class="loading-container">
+            <svg class="loading-convas" viewBox="0 0 960 300">
+                <symbol id="s-text">
+                    <text text-anchor="middle" x="50%" y="80%">AsanRegEx</text>
+                </symbol>
+                <g>
+                    <use xlink:href="#s-text" class="loading-text-copy"></use>
+                    <use xlink:href="#s-text" class="loading-text-copy"></use>
+                    <use xlink:href="#s-text" class="loading-text-copy"></use>
+                    <use xlink:href="#s-text" class="loading-text-copy"></use>
+                    <use xlink:href="#s-text" class="loading-text-copy"></use>
+                </g>
+            </svg>
+        </div>
+    </div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.

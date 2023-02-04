@@ -9,7 +9,7 @@
 
 body {
     font-family: Kollektif !important;
-    /*font-size: var(--fontSize) !important;*/
+    font-size: var(--fontSize) !important;
     color: var(--textColor) !important;
 }
 
@@ -65,6 +65,64 @@ body {
 */
 
 /* ------------------------------------------------------------------ */
+
+.loading-container {
+    display: flex;
+    /*   border:1px solid red; */
+    height: 100%;
+    align-items: center;
+}
+
+.loading-convas {
+    display: block;
+    font: 10.5em 'Kollektif';
+    width: 960px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+.loading-text-copy {
+    fill: none;
+    stroke: white;
+    stroke-dasharray: 6% 29%;
+    stroke-width: 5px;
+    stroke-dashoffset: 0%;
+    animation: loading-stroke-offset 5.5s infinite linear;
+}
+
+    .loading-text-copy:nth-child(1) {
+        stroke: var(--color1);
+        animation-delay: -1s;
+    }
+
+    .loading-text-copy:nth-child(2) {
+        stroke: var(--color3);
+        animation-delay: -2s;
+    }
+
+    .loading-text-copy:nth-child(3) {
+        stroke: var(--color1);
+        animation-delay: -3s;
+    }
+
+    .loading-text-copy:nth-child(4) {
+        stroke: var(--color3);
+        animation-delay: -4s;
+    }
+
+    .loading-text-copy:nth-child(5) {
+        stroke: var(--color1);
+        animation-delay: -5s;
+    }
+
+@keyframes loading-stroke-offset {
+    100% {
+        stroke-dashoffset: -35%;
+    }
+}
+
+/* ------------------------------------------------------------------ */
+
 @font-face {
     font-family: "Kollektif";
     font-display: swap;
