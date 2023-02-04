@@ -1,16 +1,5 @@
-﻿<div class="mb-3 border border-dark-subtle p-3" style="background-color:@BackgroundColor">
-    <div>
-        <h6 class="d-inline">Match:</h6>
-        <span class="ms-3 text-primary" style="cursor: pointer; font-size:.75rem; user-select: none" @onclick=@(()=> isExpanded = !isExpanded)>
-            @if(isExpanded)
-            {
-                <span>[ Less <Icon Name="IconName.CaretUp"></Icon> ]</span>
-            } else
-            {
-                <span>[ More <Icon Name="IconName.CaretDown"></Icon> ]</span>
-            }
-        </span>
-    </div>
+﻿<div class="mb-3 border border-dark p-3 @CssClass">
+    <Icon Name="@(isExpanded ? IconName.DashLg : IconName.List)" Style="cursor:pointer" @onclick=@(()=> isExpanded = !isExpanded) />
     <Grid TItem="MatchModel" class="@TABLE_CLASSES" DataProvider="MatchDataProvider" Responsive="true">
         <GridColumn TItem="MatchModel" HeaderText="Value" PropertyName="Value">
             @context.Value
@@ -61,7 +50,7 @@
     private const string TABLE_CLASSES = "table table-sm table-bordered table-light table-group-divider mb-3";
     private bool isExpanded = false;
     [Parameter] public MatchModel Model { get; set; } = null!;
-    [Parameter] public string BackgroundColor { get; set; } = "";
+    [Parameter] public string CssClass { get; set; } = "";
 
     private Task<GridDataProviderResult<MatchModel>> MatchDataProvider(GridDataProviderRequest<MatchModel> request)
     {

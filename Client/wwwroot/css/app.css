@@ -1,23 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 :root {
     --color1: #84008F;
     --color2: #6BDB0F;
     --color3: #CB0FDB;
-    --color4: #81FF17;
-    --textColor: var(--color1);
-    --fontSize: 20px;
+    --color4: #b7e096;
+    --color5: #F9f3ff;
+    --color6: #F3fff4;
+    --border-shadow: 0 0 0 0.25rem rgb(203 15 219 / 25%);
+    --text-color: var(--color1);
+    --font-size: 20px;
 }
 
 body {
-    font-family: Kollektif !important;
-    font-size: var(--fontSize) !important;
-    color: var(--textColor) !important;
+    font-family: 'Roboto', 'Kollektif' !important;
+    font-size: var(--font-size) !important;
+    color: var(--text-color) !important;
+    background-color: var(--color4);
 }
 
     body:after {
         content: "";
         background-image: url(../images/bg.jpg);
         background-attachment: fixed;
-        opacity: .7;
+        opacity: .4;
         top: 0;
         left: 0;
         bottom: 0;
@@ -26,56 +32,96 @@ body {
         z-index: -1;
     }
 
-/* ------------------------------------------------------------------ */
-
-.navbar-brand {
-    font-style: italic;
-    font-weight: bold;
-    color: var(--textColor);
+table {
+    font-size: var(--bs-body-font-size);
+    color: var(--text-color) !important;
 }
 
-/*.btn {
-    font-size: var(--fontSize);
+    table th, td {
+        background-color: transparent !important;
+    }
+
+.item1 {
+    background-color: var(--color5);
+}
+
+.item2 {
+    background-color: var(--color6);
+}
+
+/* ------------------------------------------------------------------ */
+
+.navbar {
+    color: var(--text-color);
+    padding: 0;
+}
+
+.navbar-brand {
+    font-family: Kollektif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--text-color);
+    padding: 0;
+}
+
+    .navbar-brand:hover {
+        color: var(--text-color);
+    }
+
+    .navbar-brand:focus {
+        color: var(--text-color);
+    }
+
+.navbar-nav .nav-link.active {
+    color: var(--text-color);
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.form-control:focus, .form-check-input:focus {
+    border-color: var(--color3);
+    box-shadow: var(--border-shadow);
+}
+
+.form-check-input:checked {
+    background-color: var(--color1);
+}
+
+/*.form-switch .form-check-input:focus {
+    --bs-form-switch-bg: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%2386b7fe'/%3e%3c/svg%3e);
+}*/
+
+.btn {
+    font-size: var(--font-size);
 }
 
 .btn-primary {
     background-color: var(--color1);
     border-color: var(--color1);
 }
+
     .btn-primary:hover {
         background-color: var(--color3);
         border-color: var(--color3);
     }
 
-    .btn-primary:focus {
-        background-color: var(--color1);
-        border: none;
-    }
-
-    .btn-primary:hover, .btn-primary:active {
-        background-color: var(--color1);
-        border-color: var(--color1);
-    }
-
-
-.btn-check:checked + .btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check) + .btn:active {
+.btn:first-child:active, :not(.btn-check) + .btn:active {
+    color: var(--bs-btn-active-color);
     background-color: var(--color1);
-    border-color: var(--color1);
+    border-color: var(--color3);
 }
-*/
 
 /* ------------------------------------------------------------------ */
 
 .loading-container {
     display: flex;
-    /*   border:1px solid red; */
     height: 100%;
     align-items: center;
 }
 
 .loading-convas {
     display: block;
-    font: 10.5em 'Kollektif';
+    font: 9em 'Kollektif';
     width: 960px;
     height: 300px;
     margin: 0 auto;
@@ -115,12 +161,31 @@ body {
         animation-delay: -5s;
     }
 
+.loading-progress {
+    background-color: silver;
+    width: 100%;
+    margin: 20% auto;
+    height: .5rem;
+    border-radius: 5rem;
+    overflow: hidden;
+    position: relative;
+}
+
+    .loading-progress:after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: var(--color1);
+        scale: var(--blazor-load-percentage, 0%) 100%;
+        transform-origin: left top;
+        transition: scale ease-out, .5s;
+    }
+
 @keyframes loading-stroke-offset {
     100% {
         stroke-dashoffset: -35%;
     }
 }
-
 /* ------------------------------------------------------------------ */
 
 @font-face {
@@ -153,11 +218,11 @@ body {
     font-style: italic;
     src: url(../fonts/Kollektif-Italic.ttf) format('truetype');
 }
-
 /* ------------------------------------------------------------------ */
 
 #blazor-error-ui {
-    background: lightyellow;
+    background: crimson;
+    color: white;
     bottom: 0;
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
     display: none;

@@ -4,14 +4,14 @@
 <main>
     <nav class="navbar navbar-expand border-bottom border-light-subtle" style="background-color:transparent">
         <div class="container-fluid">
-        <a class="navbar-brand" href="/">AsanRegEx</a>
+        <a class="navbar-brand" href="/">{ AsanRegEx }</a>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-link active">
-                    <Icon Name="IconName.InfoCircleFill" Style="cursor:pointer" @onclick="@(async ()=> await (aboutModal?.ShowAsync() ?? Task.CompletedTask))"></Icon>
+                    <Icon Name="IconName.InfoCircle" Size="IconSize.x2" Style="cursor:pointer" @onclick="@(async ()=> await (aboutModal?.ShowAsync() ?? Task.CompletedTask))"></Icon>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" target="_blank" href="@GITHUB_ADDRESS">
-                        <Icon Name="IconName.Github"></Icon>
+                        <Icon Name="IconName.Github" Size="IconSize.x2"></Icon>
                     </a>
                 </li>
             </ul>
@@ -33,7 +33,7 @@
         <br />
         Kollektif font by <a href="http://bnftype.com" target="_blank">Brave New Fonts</a>
         <br />
-        Loading by <a href="https://codepen.io/ClaireLarsen/pen/XmVyVX/" target="_blank">https://codepen.io/ClaireLarsen/pen/XmVyVX/</a>
+        Loading animation by <a href="https://codepen.io/ClaireLarsen/pen/XmVyVX/" target="_blank">https://codepen.io/ClaireLarsen/pen/XmVyVX/</a>
     </BodyTemplate>
 </Modal>
 
