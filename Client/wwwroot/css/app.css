@@ -115,6 +115,7 @@ table {
 
 .loading-container {
     display: flex;
+    flex-direction: column;
     height: 100%;
     align-items: center;
 }
@@ -163,9 +164,8 @@ table {
 
 .loading-progress {
     background-color: silver;
-    width: 100%;
-    margin: 20% auto;
-    height: .5rem;
+    width: 960px;
+    height: .2rem;
     border-radius: 5rem;
     overflow: hidden;
     position: relative;
