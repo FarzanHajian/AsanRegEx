@@ -65,7 +65,7 @@
         try
         {
             matchesFound = service.GetMatches(requestModel);
-            if (!matchesFound.Any()) toastService.Notify(new(ToastType.Warning, "No match found"));
+            if (!matchesFound.Any()) toastService.Notify(new(ToastType.Info, "No match found"));
             service.StoreInputInCache(requestModel.Input);
             service.StorePatternInCache(requestModel.Pattern);
 
