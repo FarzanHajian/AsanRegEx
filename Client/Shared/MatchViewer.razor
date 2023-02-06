@@ -1,5 +1,5 @@
 ﻿<div class="mb-3 border border-dark p-3 @CssClass">
-    <Icon Name="@(isExpanded ? IconName.DashLg : IconName.List)" Style="cursor:pointer" @onclick=@(()=> isExpanded = !isExpanded) />
+    <Icon Name="@(IsExpanded ? IconName.DashLg : IconName.List)" Style="cursor:pointer" @onclick=@(()=> IsExpanded = !IsExpanded) />
     <Grid TItem="MatchModel" class="@TABLE_CLASSES" DataProvider="MatchDataProvider" Responsive="true">
         <GridColumn TItem="MatchModel" HeaderText="Value" PropertyName="Value">
             @context.Value
@@ -12,7 +12,7 @@
         </GridColumn>
     </Grid>
 
-    @if (isExpanded)
+    @if (IsExpanded)
     {
         <h6>Captures:</h6>
         <Grid TItem="CaptureModel" class="@TABLE_CLASSES" DataProvider="CaptureDataProvider" Responsive="true">
@@ -48,7 +48,7 @@
 @code
 {
     private const string TABLE_CLASSES = "table table-sm table-bordered table-light table-group-divider mb-3";
-    private bool isExpanded = false;
+    [Parameter] public bool IsExpanded { get; set; } = false;
     [Parameter] public MatchModel Model { get; set; } = null!;
     [Parameter] public string CssClass { get; set; } = "";
 

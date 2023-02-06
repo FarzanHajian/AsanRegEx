@@ -117,11 +117,8 @@ table {
     border-color: var(--color3);
 }
 
-.toast.bg-info {
-    background-color: var(--color3) !important;
-    color: white !important;
-}
 /* ------------------------------------------------------------------ */
+
 .loading-container {
     display: flex;
     flex-direction: column;
@@ -195,6 +192,7 @@ table {
         stroke-dashoffset: -35%;
     }
 }
+
 /* ------------------------------------------------------------------ */
 
 @font-face {
@@ -227,6 +225,7 @@ table {
     font-style: italic;
     src: url(../fonts/Kollektif-Italic.ttf) format('truetype');
 }
+
 /* ------------------------------------------------------------------ */
 
 #blazor-error-ui {
