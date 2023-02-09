@@ -9,6 +9,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddSingleton<MatchService>();
+builder.Services.AddSingleton<CacheService>();
 builder.Services.AddBlazorBootstrap();
 
 await builder.Build().RunAsync();

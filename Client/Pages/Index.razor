@@ -1,17 +1,18 @@
 ﻿@page "/"
-@inject MatchService service
+@inject MatchService matchService
+@inject CacheService cacheService
 @inject ToastService toastService
 
 <EditForm Model="@requestModel" OnSubmit="@OnSubmit">
     <label for="input" class="form-label">Input String</label>
     <div class="input-group mb-3">
-        <CacheList DataSource="@service.GetCachedInputs()" OnSelect="(input)=>requestModel.Input = input" />
+        <CacheList DataSource="@cacheService.GetCachedInputs()" OnSelect="(input)=>requestModel.Input = input" />
         <textarea class="form-control" id="input" @bind="@requestModel.Input" required></textarea>
     </div>
 
     <label for="pattern" class="form-label">RegEx Pattern</label>
     <div class="input-group mb-3">
-        <CacheList DataSource="@service.GetCachedPatterns()" OnSelect="(input)=>requestModel.Pattern = input" />
+        <CacheList DataSource="@cacheService.GetCachedPatterns()" OnSelect="(input)=>requestModel.Pattern = input" />
         <input type="text" class="form-control" id="pattern" @bind-value="@requestModel.Pattern" autocomplete="off" required>
     </div>
 
@@ -64,18 +65,18 @@
 
     protected override void OnInitialized()
     {
-        inputCache = service.GetCachedInputs();
-        patternCache = service.GetCachedPatterns();
+        inputCache = cacheService.GetCachedInputs();
+        patternCache = cacheService.GetCachedPatterns();
     }
 
     private void OnSubmit()
     {
         try
         {
-            matchesFound = service.GetMatches(requestModel);
+            matchesFound = matchService.GetMatches(requestModel);
             if (!matchesFound.Any()) toastService.Notify(new(ToastType.Warning, "No match found"));
-            service.StoreInputInCache(requestModel.Input);
-            service.StorePatternInCache(requestModel.Pattern);
+            cacheService.StoreInputInCache(requestModel.Input);
+            cacheService.StorePatternInCache(requestModel.Pattern);
 
         }
         catch(Exception ex)

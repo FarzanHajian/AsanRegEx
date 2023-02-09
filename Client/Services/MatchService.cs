@@ -5,9 +5,6 @@ namespace AsanRegEx.Client.Services;
 
 public class MatchService
 {
-    private SortedSet<string> inputCache = new();
-    private SortedSet<string> patternCache = new();
-
     public MatchModel[] GetMatches(RequestModel request)
     {
         var options = RegexOptions.None;
@@ -46,27 +43,5 @@ public class MatchService
         }
 
         return result;
-    }
-
-    public IEnumerable<string> GetCachedInputs()
-    {
-        return inputCache.AsEnumerable();
-    }
-
-    public void StoreInputInCache(string input)
-    {
-        if (string.IsNullOrEmpty(input)) return;
-        inputCache.Add(input);
-    }
-
-    public IEnumerable<string> GetCachedPatterns()
-    {
-        return patternCache.AsEnumerable();
-    }
-
-    public void StorePatternInCache(string pattern)
-    {
-        if (string.IsNullOrEmpty(pattern)) return;
-        patternCache.Add(pattern);
     }
 }
