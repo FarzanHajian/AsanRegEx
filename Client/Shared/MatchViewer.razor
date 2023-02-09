@@ -1,13 +1,13 @@
 ﻿<div class="mb-3 border border-dark p-3 @CssClass">
     <Icon Name="@(IsExpanded ? IconName.DashLg : IconName.List)" Style="cursor:pointer" @onclick=@(()=> IsExpanded = !IsExpanded) />
-    <Grid TItem="MatchModel" class="@TABLE_CLASSES" DataProvider="MatchDataProvider" Responsive="true">
-        <GridColumn TItem="MatchModel" HeaderText="Value" PropertyName="Value">
+    <Grid TItem="MatchResultModel" class="@TABLE_CLASSES" DataProvider="MatchDataProvider" Responsive="true">
+        <GridColumn TItem="MatchResultModel" HeaderText="Value" PropertyName="Value">
             @context.Value
         </GridColumn>
-        <GridColumn TItem="MatchModel" HeaderText="Index" PropertyName="Index">
+        <GridColumn TItem="MatchResultModel" HeaderText="Index" PropertyName="Index">
             @context.Index
         </GridColumn>
-        <GridColumn TItem="MatchModel" HeaderText="Length" PropertyName="Length">
+        <GridColumn TItem="MatchResultModel" HeaderText="Length" PropertyName="Length">
             @context.Length
         </GridColumn>
     </Grid>
@@ -49,10 +49,10 @@
 {
     private const string TABLE_CLASSES = "table table-sm table-bordered table-light table-group-divider mb-3";
     [Parameter] public bool IsExpanded { get; set; } = false;
-    [Parameter] public MatchModel Model { get; set; } = null!;
+    [Parameter] public MatchResultModel Model { get; set; } = null!;
     [Parameter] public string CssClass { get; set; } = "";
 
-    private Task<GridDataProviderResult<MatchModel>> MatchDataProvider(GridDataProviderRequest<MatchModel> request)
+    private Task<GridDataProviderResult<MatchResultModel>> MatchDataProvider(GridDataProviderRequest<MatchResultModel> request)
     {
         return Task.FromResult(request.ApplyTo(Enumerable.Repeat(Model, 1)));
     }

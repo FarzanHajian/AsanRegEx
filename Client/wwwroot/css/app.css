@@ -117,6 +117,24 @@ table {
     border-color: var(--color3);
 }
 
+.nav-tabs {
+    border-bottom-color: var(--colo-3);
+}
+
+    .nav-tabs .nav-link.active {
+        color: var(--color1);
+        background-color: var(--color5);
+        border-color: var(--color1);
+    }
+
+    .nav-tabs .nav-link {
+        color: var(--color1);
+    }
+
+    .nav-tabs .nav-link:hover {
+        border-color: var(--color1);
+    }
+
 /* ------------------------------------------------------------------ */
 
 .loading-container {

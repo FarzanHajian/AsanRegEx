@@ -1,0 +1,50 @@
+﻿@inject RegexService regexService
+@inject CacheService cacheService
+@inject ToastService toastService
+
+<EditForm Model="@requestModel" OnSubmit="@OnSubmit">
+    <label for="input" class="form-label">Input String</label>
+    <div class="input-group mb-3">
+        <CacheList DataSource="@cacheService.GetCachedEscapes()" OnSelect="(input)=>requestModel.Input = input" />
+        <input type="text" class="form-control" id="input" @bind-value="@requestModel.Input" autocomplete="off" required>
+    </div>
+
+    <div class="row justify-content-center mb-3">
+        <div class="col text-center">
+            <Button Type="ButtonType.Submit" Color="ButtonColor.Primary" Style="width:9rem" @onclick="@(()=>isEscape = true)">
+                <Icon Name="IconName.PlayBtnFill" /> Escape
+            </Button>
+            <Button Type="ButtonType.Submit" Color="ButtonColor.Primary" Style="width:9rem" @onclick="@(()=>isEscape = false)">
+                <Icon Name="IconName.PlayBtnFill" /> Unescape
+            </Button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private EscapeRequestModel requestModel = new();
+    private bool isEscape = true;
+    private IEnumerable<string> escapeCache = Enumerable.Empty<string>();
+
+    protected override void OnInitialized()
+    {
+        escapeCache = cacheService.GetCachedEscapes();
+    }
+
+    private void OnSubmit()
+    {
+        try
+        {
+            string old = requestModel.Input;
+            if(isEscape)
+                regexService.EscapeString(requestModel);
+            else
+                regexService.UnescapeString(requestModel);
+            cacheService.StoreEscapeInCache(old);
+        }
+        catch (Exception ex)
+        {
+            toastService.Notify(new(ToastType.Danger, ex.Message));
+        }
+    }
+}

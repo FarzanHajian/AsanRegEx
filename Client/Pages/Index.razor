@@ -1,88 +1,14 @@
 ﻿@page "/"
-@inject MatchService matchService
-@inject CacheService cacheService
-@inject ToastService toastService
 
-<EditForm Model="@requestModel" OnSubmit="@OnSubmit">
-    <label for="input" class="form-label">Input String</label>
-    <div class="input-group mb-3">
-        <CacheList DataSource="@cacheService.GetCachedInputs()" OnSelect="(input)=>requestModel.Input = input" />
-        <textarea class="form-control" id="input" @bind="@requestModel.Input" required></textarea>
-    </div>
-
-    <label for="pattern" class="form-label">RegEx Pattern</label>
-    <div class="input-group mb-3">
-        <CacheList DataSource="@cacheService.GetCachedPatterns()" OnSelect="(input)=>requestModel.Pattern = input" />
-        <input type="text" class="form-control" id="pattern" @bind-value="@requestModel.Pattern" autocomplete="off" required>
-    </div>
-
-    <div class="row mb-3">
-        <OptionSwitch @bind-Checked="@requestModel.IgnoreCase" Title="IgnoreCase" />
-        <OptionSwitch @bind-Checked="@requestModel.Multiline" Title="Multiline" />
-        <OptionSwitch @bind-Checked="@requestModel.Singleline" Title="Singlelinet" />
-        <OptionSwitch @bind-Checked="@requestModel.ExplicitCapture" Title="ExplicitCapture" />
-        <OptionSwitch @bind-Checked="@requestModel.IgnorePatternWhitespace" Title="IgnorePatternWhitespace" />
-        <OptionSwitch @bind-Checked="@requestModel.RightToLeft" Title="RightToLeft" />
-        <OptionSwitch @bind-Checked="@requestModel.ECMAScript" Title="ECMAScript" />
-        <OptionSwitch @bind-Checked="@requestModel.CultureInvariant" Title="CultureInvariant" />
-        <OptionSwitch @bind-Checked="@requestModel.NonBacktracking" Title="NonBacktracking" />
-    </div>
-    <div class="row justify-content-center mb-3">
-        <div class="col-4 text-center">
-            <Button Type="ButtonType.Submit" Color="ButtonColor.Primary">
-                <Icon Name="IconName.PlayBtnFill" /> Find Matches
-            </Button>
-        </div>
-    </div>
-</EditForm>
-
-<hr />
-
-@if(matchesFound is not null)
-{
-    if (matchesFound.Length == 1)
-    {
-        <MatchViewer @key="@matchesFound[0].GetHashCode()" Model="@matchesFound[0]" CssClass="item1" IsExpanded="true" />
-    }
-    else
-    {
-        for (int i = 0; i < matchesFound.Length; i++)
-        {
-            <MatchViewer @key="@matchesFound[i].GetHashCode()" Model="@matchesFound[i]" CssClass=@(i%2 == 0 ? "item1":"item2") />
-        }
-    }
-}
-
-@code 
-{
-    private RequestModel requestModel = new();
-    //private RequestModel requestModel = new() { Input = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", Pattern = @"\b\w*[aeoiu][aeoiu]\w*\b" };
- //       private RequestModel requestModel = new() { Input = @"Cannot insert duplicate key row in object 'dbo.EmployeeRange' with unique index 'IX_EmployeeRange_Key_PricingRuleId'. The duplicate key value is (3, 1).
- //The statement has been terminated.", Pattern = @"^Cannot insert duplicate key row in object '[A-Za-z.]+' with unique index 'IX_([A-Za-z]+){1}_(?<colName>[A-Za-z]+(_[A-Za-z]+)*)'." };
-    private MatchModel[]? matchesFound = null;
-    private IEnumerable<string> inputCache = Enumerable.Empty<string>();
-    private IEnumerable<string> patternCache = Enumerable.Empty<string>();
-
-    protected override void OnInitialized()
-    {
-        inputCache = cacheService.GetCachedInputs();
-        patternCache = cacheService.GetCachedPatterns();
-    }
-
-    private void OnSubmit()
-    {
-        try
-        {
-            matchesFound = matchService.GetMatches(requestModel);
-            if (!matchesFound.Any()) toastService.Notify(new(ToastType.Warning, "No match found"));
-            cacheService.StoreInputInCache(requestModel.Input);
-            cacheService.StorePatternInCache(requestModel.Pattern);
-
-        }
-        catch(Exception ex)
-        {
-            toastService.Notify(new(ToastType.Danger, ex.Message));
-            matchesFound = null;
-        }
-    }
-}
+<Tabs EnableFadeEffect="true">
+    <Tab Title="Matches" IsActive="true">
+        <Content>
+            <MatchTab />
+        </Content>
+    </Tab>
+    <Tab Title="Escape" IsActive="false">
+        <Content>
+            <EscapeTab />
+        </Content>
+    </Tab>
+</Tabs>

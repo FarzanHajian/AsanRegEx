@@ -8,7 +8,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddSingleton<MatchService>();
+builder.Services.AddSingleton<RegexService>();
 builder.Services.AddSingleton<CacheService>();
 builder.Services.AddBlazorBootstrap();
 

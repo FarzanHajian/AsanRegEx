@@ -1,6 +1,6 @@
 ﻿namespace AsanRegEx.Client.Models;
 
-public class MatchModel
+public class MatchResultModel
 {
     public string Name { get; set; } = "";
     public string Value { get; set; } = "";
@@ -9,7 +9,7 @@ public class MatchModel
     public List<CaptureModel> Captues { get; private set; } = new List<CaptureModel>();
     public List<GroupModel> Groups { get; private set; } = new List<GroupModel>();
 
-    public MatchModel(string name, string value, int index, int legnth)
+    public MatchResultModel(string name, string value, int index, int legnth)
     {
         Name = name;
         Value = value;

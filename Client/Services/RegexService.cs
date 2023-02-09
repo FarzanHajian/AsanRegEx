@@ -1,11 +1,12 @@
 ﻿using AsanRegEx.Client.Models;
+using Microsoft.Extensions.Options;
 using System.Text.RegularExpressions;
 
 namespace AsanRegEx.Client.Services;
 
-public class MatchService
+public class RegexService
 {
-    public MatchModel[] GetMatches(RequestModel request)
+    public MatchResultModel[] GetMatches(MatchRequestModel request)
     {
         var options = RegexOptions.None;
         if (request.IgnoreCase) options |= RegexOptions.IgnoreCase;
@@ -20,13 +21,13 @@ public class MatchService
 
         var matches = Regex.Matches(request.Input, request.Pattern, options);
 
-        var result = new MatchModel[matches.Count];
+        var result = new MatchResultModel[matches.Count];
         for (int i = 0; i < result.Length; i++)
         {
             var match = matches[i];
             if (!match.Success) continue;
 
-            var item = new MatchModel(match.Name, match.Value, match.Index, match.Length);
+            var item = new MatchResultModel(match.Name, match.Value, match.Index, match.Length);
 
             foreach (Capture cap in match.Captures)
             {
@@ -43,5 +44,15 @@ public class MatchService
         }
 
         return result;
+    }
+
+    public void EscapeString(EscapeRequestModel request)
+    {
+        request.Input = Regex.Escape(request.Input);
+    }
+
+    public void UnescapeString(EscapeRequestModel request)
+    {
+        request.Input = Regex.Unescape(request.Input);
     }
 }

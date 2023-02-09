@@ -1,6 +1,6 @@
 ﻿namespace AsanRegEx.Client.Models;
 
-public class RequestModel
+public class MatchRequestModel
 {
     public string Pattern { get; set; } = "";
     public string Input { get; set; } = "";

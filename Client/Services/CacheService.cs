@@ -16,6 +16,7 @@
 
         private SortedSet<(DateTime, string)> inputCache = new(ItemComparer.Instance);
         private SortedSet<(DateTime, string)> patternCache = new(ItemComparer.Instance);
+        private SortedSet<(DateTime, string)> escapeCache = new(ItemComparer.Instance);
 
         public IEnumerable<string> GetCachedInputs()
         {
@@ -24,10 +25,7 @@
 
         public void StoreInputInCache(string input)
         {
-            if (string.IsNullOrEmpty(input)) return;
-            var item = inputCache.FirstOrDefault(i => i.Item2 == input);
-            if (item != default) inputCache.Remove(item);
-            inputCache.Add(new(DateTime.Now, input));
+            StoreInCache(input, inputCache);
         }
 
         public IEnumerable<string> GetCachedPatterns()
@@ -37,10 +35,25 @@
 
         public void StorePatternInCache(string pattern)
         {
-            if (string.IsNullOrEmpty(pattern)) return;
-            var item = patternCache.FirstOrDefault(i => i.Item2 == pattern);
-            if (item != default) patternCache.Remove(item);
-            patternCache.Add(new(DateTime.Now, pattern));
+            StoreInCache(pattern, patternCache);
+        }
+
+        public IEnumerable<string> GetCachedEscapes()
+        {
+            return escapeCache.Select(i => i.Item2);
+        }
+
+        public void StoreEscapeInCache(string encode)
+        {
+            StoreInCache(encode, escapeCache);
+        }
+
+        private void StoreInCache(string data, SortedSet<(DateTime, string)> cache)
+        {
+            if (string.IsNullOrEmpty(data)) return;
+            var item = cache.FirstOrDefault(i => i.Item2 == data);
+            if (item != default) cache.Remove(item);
+            cache.Add(new(DateTime.Now, data));
         }
     }
 }
