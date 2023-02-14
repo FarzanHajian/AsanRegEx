@@ -19,20 +19,22 @@
 
 <hr />
 
+@if (escapeResult is not null)
+{
+    <input class="form-control" @bind="@escapeResult" disabled></input>
+}
+
 @code {
     private EscapeRequestModel requestModel = new();
+    private string? escapeResult = null;
     private bool isEscape = true;
-    
+
     private void OnSubmit()
     {
         try
         {
-            string old = requestModel.Input;
-            if(isEscape)
-                regexService.EscapeString(requestModel);
-            else
-                regexService.UnescapeString(requestModel);
-            cacheService.StoreDataInCache(CacheService.ESCAPE_CACHE, old);
+            escapeResult = isEscape ? regexService.EscapeString(requestModel) : regexService.UnescapeString(requestModel);
+            cacheService.StoreDataInCache(CacheService.ESCAPE_CACHE, requestModel.Input);
         }
         catch (Exception ex)
         {

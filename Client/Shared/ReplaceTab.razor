@@ -23,24 +23,29 @@
 
 <hr />
 
+@if (replaceResult is not null)
+{
+    <textarea class="form-control" @bind="@replaceResult" disabled></textarea>
+}
+
 @code
 {
     private ReplaceRequestModel requestModel = new();
+    private string? replaceResult = null;
     private InputPatternEditor? inputPatternEditor = null;
 
     private void OnSubmit()
     {
-        //try
-        //{
-        //    matchesFound = regexService.GetMatches(requestModel);
-        //    if (!matchesFound.Any()) toastService.Notify(new(ToastType.Warning, "No match found"));
-        //inputPatternEditor!.StoreCurrentDateInCache();
-
-        //}
-        //catch (Exception ex)
-        //{
-        //    toastService.Notify(new(ToastType.Danger, ex.Message));
-        //    matchesFound = null;
-        //}
+        try
+        {
+            replaceResult = regexService.Replace(requestModel);
+            inputPatternEditor!.StoreCurrentDateInCache();
+            cacheService.StoreDataInCache(CacheService.REPLACE_REPLACEMENT_CACHE, requestModel.Replacement);
+        }
+        catch (Exception ex)
+        {
+            toastService.Notify(new(ToastType.Danger, ex.Message));
+            replaceResult = null;
+        }
     }
 }

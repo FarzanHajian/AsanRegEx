@@ -36,20 +36,20 @@ public class RegexService
         return result;
     }
 
-    public void EscapeString(EscapeRequestModel request)
+    public string EscapeString(EscapeRequestModel request)
     {
-        request.Input = Regex.Escape(request.Input);
+        return Regex.Escape(request.Input);
     }
 
-    public void UnescapeString(EscapeRequestModel request)
+    public string UnescapeString(EscapeRequestModel request)
     {
-        request.Input = Regex.Unescape(request.Input);
+        return Regex.Unescape(request.Input);
     }
 
-    public ReplaceResultModel Replace (ReplaceRequestModel request)
+    public string Replace(ReplaceRequestModel request)
     {
         var options = CreateRegexOptions(request);
-        return new ReplaceResultModel { ReplacedString = Regex.Replace(request.Input, request.Pattern, request.Replacement, options) };
+        return Regex.Replace(request.Input, request.Pattern, request.Replacement, options);
     }
 
     private RegexOptions CreateRegexOptions(IMatchOptionsModel model)
