@@ -1,0 +1,22 @@
+﻿
+@if (RequestModel is not null && CacheService is not null)
+{
+    <label for="input" class="form-label">Input String</label>
+    <div class="input-group mb-3">
+        <CacheList DataSource="@CacheService.GetCachedInputs()" OnSelect="(input)=>RequestModel.Input = input" />
+        <textarea class="form-control" id="input" @bind="@RequestModel.Input" required></textarea>
+    </div>
+
+    <label for="pattern" class="form-label">RegEx Pattern</label>
+    <div class="input-group mb-3">
+        <CacheList DataSource="@CacheService.GetCachedPatterns()" OnSelect="(input)=>RequestModel.Pattern = input" />
+        <input type="text" class="form-control" id="pattern" @bind-value="@RequestModel.Pattern" autocomplete="off" required>
+    </div>
+}
+
+@code
+{
+    [Parameter] public IInputPatternModel? RequestModel { get; set; }
+
+    [Parameter] public CacheService? CacheService { get; set; }
+}

@@ -2,10 +2,11 @@
 
 namespace AsanRegEx.Client.Models;
 
-public class MatchRequestModel: IInputPatternModel, IMatchOptionsModel
+public class ReplaceRequestModel: IInputPatternModel, IMatchOptionsModel
 {
     public string Pattern { get; set; } = "";
     public string Input { get; set; } = "";
+    public string Replacement { get; set; } = "";
     public bool IgnoreCase { get; set; }
     public bool Multiline { get; set; }
     public bool Singleline { get; set; }

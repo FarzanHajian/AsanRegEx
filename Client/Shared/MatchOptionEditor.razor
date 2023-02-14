@@ -1,0 +1,19 @@
+﻿@if (RequestModel is not null)
+{
+    <div class="row mb-3">
+        <OptionSwitch @bind-Checked="@RequestModel.IgnoreCase" Title="IgnoreCase" />
+        <OptionSwitch @bind-Checked="@RequestModel.Multiline" Title="Multiline" />
+        <OptionSwitch @bind-Checked="@RequestModel.Singleline" Title="Singlelinet" />
+        <OptionSwitch @bind-Checked="@RequestModel.ExplicitCapture" Title="ExplicitCapture" />
+        <OptionSwitch @bind-Checked="@RequestModel.IgnorePatternWhitespace" Title="IgnorePatternWhitespace" />
+        <OptionSwitch @bind-Checked="@RequestModel.RightToLeft" Title="RightToLeft" />
+        <OptionSwitch @bind-Checked="@RequestModel.ECMAScript" Title="ECMAScript" />
+        <OptionSwitch @bind-Checked="@RequestModel.CultureInvariant" Title="CultureInvariant" />
+        <OptionSwitch @bind-Checked="@RequestModel.NonBacktracking" Title="NonBacktracking" />
+    </div>
+}
+
+@code
+{
+    [Parameter] public IMatchOptionsModel? RequestModel { get; set; }
+}

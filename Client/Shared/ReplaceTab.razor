@@ -1,0 +1,44 @@
+﻿@inject RegexService regexService
+@inject CacheService cacheService
+@inject ToastService toastService
+
+<EditForm Model="@requestModel" OnSubmit="@OnSubmit">
+    <InputPatternEditor RequestModel="@requestModel" CacheService="@cacheService" />
+
+    <label for="replacement" class="form-label">Replacement String</label>
+    <div class="input-group mb-3">
+        <CacheList DataSource="@cacheService.GetCachedInputs()" OnSelect="(input)=>requestModel.Replacement = input" />
+        <textarea class="form-control" id="input" @bind="@requestModel.Replacement" required></textarea>
+    </div>
+    
+    <MatchOptionEditor RequestModel="@requestModel"/>
+    <div class="row justify-content-center mb-3">
+        <div class="col-4 text-center">
+            <SubmitButton Text="Replace" />
+        </div>
+    </div>
+</EditForm>
+
+<hr />
+
+@code
+{
+    private ReplaceRequestModel requestModel = new();
+
+    private void OnSubmit()
+    {
+        //try
+        //{
+        //    matchesFound = regexService.GetMatches(requestModel);
+        //    if (!matchesFound.Any()) toastService.Notify(new(ToastType.Warning, "No match found"));
+        //    cacheService.StoreInputInCache(requestModel.Input);
+        //    cacheService.StorePatternInCache(requestModel.Pattern);
+
+        //}
+        //catch (Exception ex)
+        //{
+        //    toastService.Notify(new(ToastType.Danger, ex.Message));
+        //    matchesFound = null;
+        //}
+    }
+}

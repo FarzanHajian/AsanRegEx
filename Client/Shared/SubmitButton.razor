@@ -1,0 +1,9 @@
+﻿<Button Type="ButtonType.Submit" Color="ButtonColor.Primary" Style="@Style" @onclick="@OnClick">
+    <Icon Name="IconName.PlayBtnFill" />&nbsp;@Text&nbsp;
+</Button>
+
+@code {
+    [Parameter] public string Text { get; set; } = "";
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+    [Parameter] public string Style { get; set; } = "";
+}

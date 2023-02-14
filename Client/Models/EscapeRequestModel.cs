@@ -1,7 +1,6 @@
-﻿namespace AsanRegEx.Client.Models
+﻿namespace AsanRegEx.Client.Models;
+
+public class EscapeRequestModel
 {
-    public class EscapeRequestModel
-    {
-        public string Input { get; set; } = "";
-    }
+    public string Input { get; set; } = "";
 }
