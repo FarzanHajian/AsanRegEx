@@ -3,7 +3,8 @@
 @inject ToastService toastService
 
 <EditForm Model="@requestModel" OnSubmit="@OnSubmit">
-    <InputPatternEditor RequestModel="@requestModel" CacheService="@cacheService" />
+    <InputPatternEditor @ref="@inputPatternEditor" RequestModel="@requestModel" CacheService="@cacheService"
+        InputStringCache="@CacheService.MATCH_INPUT_CACHE" PatternStringCache="@CacheService.MATCH_PATTERN_CACHE" />
 
     <MatchOptionEditor RequestModel="@requestModel"/>
     <div class="row justify-content-center mb-3">
@@ -34,6 +35,8 @@
 {
     private MatchRequestModel requestModel = new();
     private MatchResultModel[]? matchesFound = null;
+    private InputPatternEditor? inputPatternEditor = null;
+
 
     private void OnSubmit()
     {
@@ -41,9 +44,7 @@
         {
             matchesFound = regexService.GetMatches(requestModel);
             if (!matchesFound.Any()) toastService.Notify(new(ToastType.Warning, "No match found"));
-            cacheService.StoreInputInCache(requestModel.Input);
-            cacheService.StorePatternInCache(requestModel.Pattern);
-
+            inputPatternEditor!.StoreCurrentDateInCache();
         }
         catch (Exception ex)
         {

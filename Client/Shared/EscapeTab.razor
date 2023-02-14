@@ -5,7 +5,7 @@
 <EditForm Model="@requestModel" OnSubmit="@OnSubmit">
     <label for="input" class="form-label">Input String</label>
     <div class="input-group mb-3">
-        <CacheList DataSource="@cacheService.GetCachedEscapes()" OnSelect="(input)=>requestModel.Input = input" />
+        <CacheList DataSource="@cacheService.GetCachedData(CacheService.ESCAPE_CACHE)" OnSelect="(input)=>requestModel.Input = input" />
         <input type="text" class="form-control" id="input" @bind-value="@requestModel.Input" autocomplete="off" required>
     </div>
 
@@ -32,7 +32,7 @@
                 regexService.EscapeString(requestModel);
             else
                 regexService.UnescapeString(requestModel);
-            cacheService.StoreEscapeInCache(old);
+            cacheService.StoreDataInCache(CacheService.ESCAPE_CACHE, old);
         }
         catch (Exception ex)
         {

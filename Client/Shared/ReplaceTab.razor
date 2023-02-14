@@ -3,11 +3,13 @@
 @inject ToastService toastService
 
 <EditForm Model="@requestModel" OnSubmit="@OnSubmit">
-    <InputPatternEditor RequestModel="@requestModel" CacheService="@cacheService" />
+    <InputPatternEditor @ref="@inputPatternEditor" RequestModel="@requestModel" CacheService="@cacheService"
+        InputStringCache="@CacheService.REPLACE_INPUT_CACHE" PatternStringCache="@CacheService.REPLACE_PATTERN_CACHE" />
 
     <label for="replacement" class="form-label">Replacement String</label>
     <div class="input-group mb-3">
-        <CacheList DataSource="@cacheService.GetCachedInputs()" OnSelect="(input)=>requestModel.Replacement = input" />
+        <CacheList DataSource="@cacheService.GetCachedData(CacheService.REPLACE_REPLACEMENT_CACHE)"
+            OnSelect="(input)=>requestModel.Replacement = input" />
         <textarea class="form-control" id="input" @bind="@requestModel.Replacement" required></textarea>
     </div>
     
@@ -24,6 +26,7 @@
 @code
 {
     private ReplaceRequestModel requestModel = new();
+    private InputPatternEditor? inputPatternEditor = null;
 
     private void OnSubmit()
     {
@@ -31,8 +34,7 @@
         //{
         //    matchesFound = regexService.GetMatches(requestModel);
         //    if (!matchesFound.Any()) toastService.Notify(new(ToastType.Warning, "No match found"));
-        //    cacheService.StoreInputInCache(requestModel.Input);
-        //    cacheService.StorePatternInCache(requestModel.Pattern);
+        //inputPatternEditor!.StoreCurrentDateInCache();
 
         //}
         //catch (Exception ex)

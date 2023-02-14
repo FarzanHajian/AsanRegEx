@@ -14,46 +14,35 @@
             }
         }
 
-        private SortedSet<(DateTime, string)> inputCache = new(ItemComparer.Instance);
-        private SortedSet<(DateTime, string)> patternCache = new(ItemComparer.Instance);
-        private SortedSet<(DateTime, string)> escapeCache = new(ItemComparer.Instance);
+        public const string MATCH_INPUT_CACHE = "MATCH_INPUT_CACHE";
+        public const string MATCH_PATTERN_CACHE = "MATCH_PATTERN_CACHE";
+        public const string ESCAPE_CACHE = "REPLACEESCAPE_CACHE";
+        public const string REPLACE_INPUT_CACHE = "REPLACE_INPUT_CACHE";
+        public const string REPLACE_PATTERN_CACHE = "REPLACE_PATTERN_CACHE";
+        public const string REPLACE_REPLACEMENT_CACHE = "REPLACE_REPLACEMENT_CACHE";
 
-        public IEnumerable<string> GetCachedInputs()
+        private Dictionary<string, SortedSet<(DateTime, string)>> cacheHolder = new();
+
+        public IEnumerable<string> GetCachedData(string cacheName)
         {
-            return inputCache.Select(i => i.Item2);
+            return GetOrCreateCache(cacheName).Select(i => i.Item2);
         }
 
-        public void StoreInputInCache(string input)
+        public void StoreDataInCache(string cacheName, string data)
         {
-            StoreInCache(input, inputCache);
-        }
-
-        public IEnumerable<string> GetCachedPatterns()
-        {
-            return patternCache.Select(i => i.Item2);
-        }
-
-        public void StorePatternInCache(string pattern)
-        {
-            StoreInCache(pattern, patternCache);
-        }
-
-        public IEnumerable<string> GetCachedEscapes()
-        {
-            return escapeCache.Select(i => i.Item2);
-        }
-
-        public void StoreEscapeInCache(string encode)
-        {
-            StoreInCache(encode, escapeCache);
-        }
-
-        private void StoreInCache(string data, SortedSet<(DateTime, string)> cache)
-        {
-            if (string.IsNullOrEmpty(data)) return;
+            if (data == "") return;
+            var cache = GetOrCreateCache(cacheName);
             var item = cache.FirstOrDefault(i => i.Item2 == data);
             if (item != default) cache.Remove(item);
             cache.Add(new(DateTime.Now, data));
+        }
+
+        private SortedSet<(DateTime, string)> GetOrCreateCache(string name)
+        {
+            if (cacheHolder.ContainsKey(name)) return cacheHolder[name];
+            var cache = new SortedSet<(DateTime, string)>(ItemComparer.Instance);
+            cacheHolder[name] = cache;
+            return cache;
         }
     }
 }
