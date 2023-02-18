@@ -1,9 +1,9 @@
-﻿@inject RegexService regexService
-@inject CacheService cacheService
-@inject ToastService toastService
+﻿@inject RegexService RegexService
+@inject CacheService CacheService
+@inject ToastService ToastService
 
 <EditForm Model="@requestModel" OnSubmit="@OnSubmit">
-    <InputPatternEditor @ref="@inputPatternEditor" RequestModel="@requestModel" CacheService="@cacheService"
+    <InputPatternEditor @ref="@inputPatternEditor" RequestModel="@requestModel" CacheService="@CacheService"
         InputStringCache="@CacheService.MATCH_INPUT_CACHE" PatternStringCache="@CacheService.MATCH_PATTERN_CACHE" />
 
     <MatchOptionEditor RequestModel="@requestModel"/>
@@ -42,13 +42,13 @@
     {
         try
         {
-            matchesFound = regexService.GetMatches(requestModel);
-            if (!matchesFound.Any()) toastService.Notify(new(ToastType.Warning, "No match found"));
+            matchesFound = RegexService.GetMatches(requestModel);
+            if (!matchesFound.Any()) ToastService.Notify(new(ToastType.Warning, "No match found"));
             inputPatternEditor!.StoreCurrentDateInCache();
         }
         catch (Exception ex)
         {
-            toastService.Notify(new(ToastType.Danger, ex.Message));
+            ToastService.Notify(new(ToastType.Danger, ex.Message));
             matchesFound = null;
         }
     }

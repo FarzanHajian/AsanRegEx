@@ -1,11 +1,11 @@
-﻿@inject RegexService regexService
-@inject CacheService cacheService
-@inject ToastService toastService
+﻿@inject RegexService RegexService
+@inject CacheService CacheService
+@inject ToastService ToastService
 
 <EditForm Model="@requestModel" OnSubmit="@OnSubmit">
     <label for="input" class="form-label">Input String</label>
     <div class="input-group mb-3">
-        <CacheList DataSource="@cacheService.GetCachedData(CacheService.ESCAPE_CACHE)" OnSelect="(input)=>requestModel.Input = input" />
+        <CacheList DataSource="@CacheService.GetCachedData(CacheService.ESCAPE_CACHE)" OnSelect="(input)=>requestModel.Input = input" />
         <input type="text" class="form-control" id="input" @bind-value="@requestModel.Input" autocomplete="off" required>
     </div>
 
@@ -33,12 +33,12 @@
     {
         try
         {
-            escapeResult = isEscape ? regexService.EscapeString(requestModel) : regexService.UnescapeString(requestModel);
-            cacheService.StoreDataInCache(CacheService.ESCAPE_CACHE, requestModel.Input);
+            escapeResult = isEscape ? RegexService.EscapeString(requestModel) : RegexService.UnescapeString(requestModel);
+            CacheService.StoreDataInCache(CacheService.ESCAPE_CACHE, requestModel.Input);
         }
         catch (Exception ex)
         {
-            toastService.Notify(new(ToastType.Danger, ex.Message));
+            ToastService.Notify(new(ToastType.Danger, ex.Message));
         }
     }
 }

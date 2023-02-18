@@ -1,14 +1,14 @@
-﻿@inject RegexService regexService
-@inject CacheService cacheService
-@inject ToastService toastService
+﻿@inject RegexService RegexService
+@inject CacheService CacheService
+@inject ToastService ToastService
 
 <EditForm Model="@requestModel" OnSubmit="@OnSubmit">
-    <InputPatternEditor @ref="@inputPatternEditor" RequestModel="@requestModel" CacheService="@cacheService"
+    <InputPatternEditor @ref="@inputPatternEditor" RequestModel="@requestModel" CacheService="@CacheService"
         InputStringCache="@CacheService.REPLACE_INPUT_CACHE" PatternStringCache="@CacheService.REPLACE_PATTERN_CACHE" />
 
     <label for="replacement" class="form-label">Replacement String</label>
     <div class="input-group mb-3">
-        <CacheList DataSource="@cacheService.GetCachedData(CacheService.REPLACE_REPLACEMENT_CACHE)"
+        <CacheList DataSource="@CacheService.GetCachedData(CacheService.REPLACE_REPLACEMENT_CACHE)"
             OnSelect="(input)=>requestModel.Replacement = input" />
         <textarea class="form-control" id="input" @bind="@requestModel.Replacement" required></textarea>
     </div>
@@ -38,13 +38,13 @@
     {
         try
         {
-            replaceResult = regexService.Replace(requestModel);
+            replaceResult = RegexService.Replace(requestModel);
             inputPatternEditor!.StoreCurrentDateInCache();
-            cacheService.StoreDataInCache(CacheService.REPLACE_REPLACEMENT_CACHE, requestModel.Replacement);
+            CacheService.StoreDataInCache(CacheService.REPLACE_REPLACEMENT_CACHE, requestModel.Replacement);
         }
         catch (Exception ex)
         {
-            toastService.Notify(new(ToastType.Danger, ex.Message));
+            ToastService.Notify(new(ToastType.Danger, ex.Message));
             replaceResult = null;
         }
     }
