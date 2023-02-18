@@ -16,10 +16,12 @@
 
         public const string MATCH_INPUT_CACHE = "MATCH_INPUT_CACHE";
         public const string MATCH_PATTERN_CACHE = "MATCH_PATTERN_CACHE";
-        public const string ESCAPE_CACHE = "REPLACEESCAPE_CACHE";
+        public const string ESCAPE_CACHE = "REPLACE_CACHE";
         public const string REPLACE_INPUT_CACHE = "REPLACE_INPUT_CACHE";
         public const string REPLACE_PATTERN_CACHE = "REPLACE_PATTERN_CACHE";
         public const string REPLACE_REPLACEMENT_CACHE = "REPLACE_REPLACEMENT_CACHE";
+        public const string SPLIT_INPUT_CACHE = "SPLIT_INPUT_CACHE";
+        public const string SPLIT_PATTERN_CACHE = "SPLIT_PATTERN_CACHE";
 
         private Dictionary<string, SortedSet<(DateTime, string)>> cacheHolder = new();
 

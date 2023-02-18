@@ -52,6 +52,13 @@ public class RegexService
         return Regex.Replace(request.Input, request.Pattern, request.Replacement, options);
     }
 
+    public SplitResultModel Split(SplitRequestModel request)
+    {
+        var options = CreateRegexOptions(request);
+        var temp = Regex.Split(request.Input, request.Pattern, options);
+        return new SplitResultModel(string.Join('\n', temp), temp.Length);
+    }
+
     private RegexOptions CreateRegexOptions(IMatchOptionsModel model)
     {
         var result = RegexOptions.None;

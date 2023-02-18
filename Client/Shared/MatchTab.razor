@@ -9,7 +9,7 @@
     <MatchOptionEditor RequestModel="@requestModel"/>
     <div class="row justify-content-center mb-3">
         <div class="col-4 text-center">
-            <SubmitButton Text="Find Matches" />
+            <SubmitButton Text="Match" />
         </div>
     </div>
 </EditForm>
@@ -36,7 +36,6 @@
     private MatchRequestModel requestModel = new();
     private MatchResultModel[]? matchesFound = null;
     private InputPatternEditor? inputPatternEditor = null;
-
 
     private void OnSubmit()
     {

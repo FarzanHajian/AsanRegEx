@@ -1,0 +1,44 @@
+﻿@inject RegexService RegexService
+@inject CacheService CacheService
+@inject ToastService ToastService
+
+<EditForm Model="@requestModel" OnSubmit="@OnSubmit">
+    <InputPatternEditor @ref="@inputPatternEditor" RequestModel="@requestModel" CacheService="@CacheService"
+                        InputStringCache="@CacheService.SPLIT_INPUT_CACHE" PatternStringCache="@CacheService.SPLIT_PATTERN_CACHE" />
+
+    <MatchOptionEditor RequestModel="@requestModel" />
+    <div class="row justify-content-center mb-3">
+        <div class="col-4 text-center">
+            <SubmitButton Text="Split" />
+        </div>
+    </div>
+</EditForm>
+
+<hr />
+
+@if (splitResult is not null)
+{
+    <textarea class="form-control" @bind="@splitResult.Result" rows="@splitResult.ItemCount" disabled></textarea>
+}
+
+
+@code
+{
+    private SplitRequestModel requestModel = new();
+    private SplitResultModel? splitResult = null;
+    private InputPatternEditor? inputPatternEditor = null;
+
+    private void OnSubmit()
+    {
+        try
+        {
+            splitResult = RegexService.Split(requestModel);
+            inputPatternEditor!.StoreCurrentDateInCache();
+        }
+        catch (Exception ex)
+        {
+            ToastService.Notify(new(ToastType.Danger, ex.Message));
+            splitResult = null;
+        }
+    }
+}
