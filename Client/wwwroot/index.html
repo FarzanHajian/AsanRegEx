@@ -4,7 +4,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asan RegEx</title>
+    <meta name="description" content="AsanRegEx is a previewer tool that provides a user-friendly interface for .NET developers to input their regular expressions and sample texts and then see the pattern-matching results in real-time.
+    This would allow developers to test their regular expressions and make sure they are working as expected before integrating them into their .NET code. This can be especially useful for identifying issues with complex regular expressions.
+    Overall, the goal of the tool is to help developers save time and improve the accuracy of their regular expressions by providing a more intuitive and user-friendly way to preview and debug them." />
+    <title>AsanRegEx - A Regex previewer tool for .NET that aims to provide developers with a user-friendly interface to work with regular expressions</title>
     <base href="/" />
     <link href="manifest.json" rel="manifest" />
 
@@ -12,10 +15,16 @@
     <link rel="stylesheet" href="_content/Blazor.Bootstrap/blazor.bootstrap.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/app.css" />
-
 </head>
-
 <body>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8CG2043JC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-Z8CG2043JC');
+    </script>
     <div id="app">
         <div class="loading-container">
             <svg class="loading-convas" viewBox="0 0 960 300">
