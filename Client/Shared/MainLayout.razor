@@ -25,7 +25,7 @@
 
 <Toasts class="p-3" AutoHide="true" Delay="4000" Placement="ToastsPlacement.TopRight" />
 
-<Modal @ref="@aboutModal" Size="ModalSize.Large" Title="AsanRegEx  (1.0.0)">
+<Modal @ref="@aboutModal" Size="ModalSize.Large" Title="@title">
     <BodyTemplate>
         AsanRegEx is a Regex previewer tool for .NET that aims to provide developers with a user-friendly interface to work with regular expressions. 
         <br />
@@ -43,5 +43,6 @@
 @code
 {
     private const string GITHUB_ADDRESS = "https://github.com/FarzanHajian/AsanRegEx";
+    private string title = "AsanRegEx (" + Assembly.GetExecutingAssembly().GetName().Version.ToString(3) + ")";
     private Modal? aboutModal;
-}       
+}
