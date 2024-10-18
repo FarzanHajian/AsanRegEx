@@ -1,6 +1,5 @@
 using AsanRegEx.Client;
 using AsanRegEx.Client.Services;
-using BlazorBootstrap;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
