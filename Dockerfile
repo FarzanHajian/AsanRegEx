@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build-env
 WORKDIR /app
 COPY . .
 RUN dotnet restore
@@ -6,9 +6,9 @@ RUN dotnet publish -c Release -r linux-x64 --self-contained -o out
 
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
 LABEL "Maintainer"="Farzan Hajian"
-LABEL "Version"="1.1"
+LABEL "Version"="1.2"
 EXPOSE 5000/tcp
 WORKDIR /app
 COPY --from=build-env /app/out .
