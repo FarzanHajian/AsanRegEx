@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build-env
 WORKDIR /app
 COPY . .
 RUN dotnet restore
-RUN dotnet publish -c Release -r linux-x64 --self-contained -o out
+RUN dotnet publish -c Release -o out
 
 
 # Build runtime image
